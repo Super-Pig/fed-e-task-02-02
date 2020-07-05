@@ -25,3 +25,42 @@
 5. 把打包结果输出到 output节点配置的目标文件
 
 6. 在构建流程的各个阶段会执行被挂载的plugin
+
+# 2、Loader 和 Plugin 有哪些不同？请描述一下开发 Loader 和 Plugin 的思路。
+
+## 答：
+
+Loader 专注实现资源模块加载；Plugin 解决项目中的其他自动化工作，例如清除dist目录、拷贝静态文件至输出目录、压缩输出代码等。
+
+- Loader 开发思路：
+ 
+loader 是一个函数，该函数的入参是加载到的资源文件的内容，返回值是加工后的结果；
+
+由于返回值会输出到目标bunder文件，所以需要保证最终返回值是一段标准的javascript代码保证目标文件的语法正确
+
+- Plugin 开发思路：
+
+Plugin 通过钩子机制实现；
+
+plugin 是一个函数或者是一个包含 apply 方法的对象；
+
+apply 方法会在 webpack 启动时自动调用；apply 接收一个 compiler 对象入参，compiler 对象包含webpack 所有的配置信息，通过该对象来挂载钩子函数；
+
+挂载方式：
+
+```
+compiler.hooks.someHook.tap('MyPlugin', (compilation) => {
+  /* ... */
+});
+```
+
+第一个参数是 plugin 的名字，第二个参数是钩子函数；钩子函数入参 compilation 是此次打包的上下文；
+
+通过 compilation.assets 可以获取打包的资源信息；通过 `complation.assets[oneAssetName].source()` 获取资源内容；
+
+通过对资源内容的修改，并且把修改结果覆盖到资源对象上，来实现对打包结果的修改
+
+
+
+
+
