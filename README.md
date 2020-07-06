@@ -1,5 +1,9 @@
 # fed-e-task-02-02 简答题答案
 
+# 视频文件：
+
+链接: https://pan.baidu.com/s/11qQvShT_bmGQJVTIeh-pTw  密码: s5m6
+
 # Webpack 的构建流程主要有哪些环节？如果可以请尽可能详尽的描述 Webpack 打包的整个过程。
 
 ## 答：
